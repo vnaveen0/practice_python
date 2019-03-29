@@ -17,7 +17,7 @@ r3 = [None]*r1m*r2n
 
 
 #r1n==r2m == N
-assert ('dimensions do not match multiply not possible',r1n == r2m)
+assert r1n == r2m,'dimensions do not match multiply not possible'
 N = r1n
 for row in range(r1m):
     for col in range(r2n):
