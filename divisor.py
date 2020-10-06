@@ -87,23 +87,24 @@ class Solution(object):
         print('Divisor Game')
 
     def divisorGame(self, N):
-        cache = {}
-        return self.canWin(N,cache)
+        memory = {}
+        return self.canWin(N,memory)
 
-    def canWin(self, N, cache):
+    def canWin(self, N, memory):
         if N < 1:
             return True
         elif N == 1:
             return False
-        if N in cache.keys():
-            return cache[N]
+        if N in memory.keys():
+            return memory[N]
 
-        for x in range(1,N):
+        max_val = int(N/2 + 1 )
+        for x in range(1,max_val):
             if N%x == 0:
-                if not self.canWin(N-x, cache):
-                    cache[N] = True
+                if not self.canWin(N-x, memory):
+                    memory[N] = True
                     return True
-        cache[N] = False
+        memory[N] = False
         return False
 
 
