@@ -1,4 +1,4 @@
-class Solution(object):
+class Solution2(object):
     def __init__(self):
         print('Divisor Game')
         self.memory = {0:{}, 1:{}}
@@ -10,7 +10,7 @@ class Solution(object):
         :type N: int
         :rtype: bool
         """
-        depth = 0
+        depth = 1
         depth, iswin = self.check_future(depth, N)
 
         d = depth % 2
@@ -24,7 +24,6 @@ class Solution(object):
     def check_future(self, depth, N):
         d = depth%2
         if N in self.memory[d]:
-            depth += 1
             iswin = self.memory[d][N]
             print('--* for vals :{}, new num: {}, ans: {}'.format(d, N, iswin))
             return depth, iswin
@@ -34,7 +33,6 @@ class Solution(object):
         #     print('-- - for vals :{}, new num: {}, ans: {}'.format(d, N, ans))
         #     return depth, True
         elif N == 1:
-            depth += 1
             d = depth%2
             if d == 0:
                 ans=True
@@ -44,7 +42,6 @@ class Solution(object):
             self.memory[d][N] = ans
             return depth, False
         elif N == 2:
-            depth += 1
             d = depth%2
             if d == 0:
                 ans=False
@@ -58,30 +55,21 @@ class Solution(object):
             x = self.search_selected_numbers(N)
             print('sel num:{}'.format(x))
 
-            orig_depth = depth + 1
+            orig_depth = depth
             for idx, selected_val in enumerate(x):
                 # Alice's turn
-                depth = orig_depth
+                depth = orig_depth + 1
                 new_num = N - selected_val
                 # Bob's turn
                 print('for vals :{}, new num: {}'.format(selected_val, new_num))
-                new_depth, is_win = self.check_future(depth, new_num)
-                d= (new_depth)%2
+                _, is_win = self.check_future(depth, new_num)
+                d= (depth)%2
                 self.memory[d][new_num] = is_win
 
-                # Return True if Bob lose
-                if d == 0:
-                    if not is_win:
-                        print('-- for vals :{}, new num: {}, ans: {}'.format(d, new_num, True))
-                        return new_depth, True
-                    # else:
-                    #     return new_depth, False
+                if not is_win:
+                    continue
                 else:
-                    if is_win:
-                        print('-- for vals :{}, new num: {}, ans: {}'.format(d, new_num, True))
-                        return new_depth, True
-                    # else:
-                    #     return new_depth, False
+                    return depth, is_win
             # end for
             d = orig_depth%2
             print('-- for vals :{}, new num: {}, ans: {}'.format(d, N, False))
@@ -93,6 +81,30 @@ class Solution(object):
             if N % i == 0:
                 x.append(i)
         return x
+
+class Solution(object):
+    def __init__(self):
+        print('Divisor Game')
+
+    def divisorGame(self, N):
+        cache = {}
+        return self.canWin(N,cache)
+
+    def canWin(self, N, cache):
+        if N < 1:
+            return True
+        elif N == 1:
+            return False
+        if N in cache.keys():
+            return cache[N]
+
+        for x in range(1,N):
+            if N%x == 0:
+                if not self.canWin(N-x, cache):
+                    cache[N] = True
+                    return True
+        cache[N] = False
+        return False
 
 
 if __name__ == '__main__':
