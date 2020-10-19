@@ -96,10 +96,10 @@ class Solution(object):
         :rtype: int
         """
         len_nums = len(nums)
-        prev_max = nums[0]
-        cur_max = nums[0]
+        global_max = nums[0]
+        max_ending_here = nums[0]
 
         for i in range(1, len_nums):
-            cur_max = max(cur_max + nums[i], nums[i])
-            prev_max = max(prev_max, cur_max)
-        return prev_max
+            max_ending_here = max(max_ending_here + nums[i], nums[i])
+            global_max = max(global_max, max_ending_here)
+        return global_max
