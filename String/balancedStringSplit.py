@@ -45,3 +45,30 @@ class Solution0(object):
             print(g_max)
         
         return g_max 
+
+
+
+
+
+class Solution(object):
+    def balancedStringSplit(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        g_max=0
+        r_count = 0
+        l_count = 0 
+        
+        for val in s:
+            if val == 'L':
+                l_count +=1
+            else: 
+                r_count +=1
+            
+            if l_count == r_count:
+                g_max +=1
+                l_count = 0
+                r_count = 0
+        
+        return g_max
