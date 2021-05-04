@@ -15,5 +15,5 @@ for s in reversed(str):
     else:
         isfirst = False
         str2 = s + str2
-        
+
 print(str2)
